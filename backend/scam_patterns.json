@@ -1,0 +1,82 @@
+{
+  "scam_patterns": [
+    {
+      "id": "pattern_01",
+      "name": "Account Compromise",
+      "keywords": ["account", "compromised", "suspended", "blocked", "unauthorized", "suspicious"],
+      "severity": "Critical",
+      "indicatorScore": 0.95
+    },
+    {
+      "id": "pattern_02",
+      "name": "Credential Theft",
+      "keywords": ["password", "otp", "pin", "verify", "confirm", "authenticate", "credentials"],
+      "severity": "Critical",
+      "indicatorScore": 0.92
+    },
+    {
+      "id": "pattern_03",
+      "name": "Urgency/Pressure",
+      "keywords": ["urgent", "immediately", "right now", "asap", "hurry", "quickly", "emergency"],
+      "severity": "High",
+      "indicatorScore": 0.88
+    },
+    {
+      "id": "pattern_04",
+      "name": "Phishing Links",
+      "keywords": ["click", "link", "http", "verify", "activate", "update", "secure", "confirm"],
+      "severity": "Critical",
+      "indicatorScore": 0.98
+    },
+    {
+      "id": "pattern_05",
+      "name": "Financial Threat",
+      "keywords": ["money", "rupees", "payment", "debit", "transfer", "amount", "transaction"],
+      "severity": "High",
+      "indicatorScore": 0.90
+    },
+    {
+      "id": "pattern_06",
+      "name": "Legal Threat",
+      "keywords": ["legal", "police", "arrest", "lawsuit", "fine", "court", "charges"],
+      "severity": "High",
+      "indicatorScore": 0.85
+    },
+    {
+      "id": "pattern_07",
+      "name": "Personal Information Request",
+      "keywords": ["name", "address", "date", "birth", "ssn", "aadhar", "pan", "details"],
+      "severity": "Critical",
+      "indicatorScore": 0.88
+    },
+    {
+      "id": "pattern_08",
+      "name": "Tech Support Fraud",
+      "keywords": ["error", "malware", "virus", "infected", "remote", "support", "access"],
+      "severity": "High",
+      "indicatorScore": 0.87
+    }
+  ],
+  "common_phrases": [
+    "Your account has been compromised",
+    "Verify your identity immediately",
+    "Unusual activity detected",
+    "Click here to activate",
+    "Update payment information",
+    "Confirm your credentials",
+    "Your computer is infected",
+    "You are selected for",
+    "Limited time offer",
+    "Act now to avoid"
+  ],
+  "risk_triggers": [
+    {"keyword": "urgent", "weight": 0.8},
+    {"keyword": "immediate", "weight": 0.75},
+    {"keyword": "verify", "weight": 0.85},
+    {"keyword": "password", "weight": 0.95},
+    {"keyword": "otp", "weight": 0.9},
+    {"keyword": "click", "weight": 0.8},
+    {"keyword": "payment", "weight": 0.7},
+    {"keyword": "confirm", "weight": 0.85}
+  ]
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "call_001",
+    "scammerId": "scammer_01",
+    "phoneNumber": "+91-98765-43210",
+    "scammerName": "Rajesh Kumar",
+    "transcript": "Scammer: Hello sir, this is Rajesh from ICICI Bank. Scammer: Sir, we detected suspicious activity on your account. Your account has been compromised. Scammer: Can you please verify your UPI ID? User: Which UPI ID? Scammer: Your registered UPI ID starting with r.kumar@icici. Scammer: We need to verify it for security. User: I will not share that. Scammer: Sir this is urgent, a transaction of 50,000 is pending. Scammer: If you don't verify now, your account will be blocked.",
+    "duration": 240,
+    "timestamp": "2026-02-04T10:30:00Z",
+    "riskLevel": "Critical",
+    "honeypotEngaged": true,
+    "status": "recorded",
+    "detectedPatterns": ["account_compromise", "urgency_pressure", "credential_theft", "financial_threat"]
+  },
+  {
+    "id": "call_002",
+    "scammerId": "scammer_02",
+    "phoneNumber": "+91-87654-32109",
+    "scammerName": "Priya Singh",
+    "transcript": "Scammer: Hello, your Amazon account is suspended. User: What? Scammer: Yes, there's been suspicious activity. Please click on this link immediately: http://amaz0n-verify.xyz to reactivate. Scammer: There is a pending order of Rs 25,000 that needs verification. User: This looks fake. Scammer: No sir, this is urgent. Your account will be closed in 1 hour.",
+    "duration": 180,
+    "timestamp": "2026-02-03T15:45:00Z",
+    "riskLevel": "High",
+    "honeypotEngaged": true,
+    "status": "recorded",
+    "detectedPatterns": ["phishing_links", "urgency_pressure", "account_compromise", "credential_theft"]
+  },
+  {
+    "id": "call_003",
+    "scammerId": "scammer_04",
+    "phoneNumber": "+91-65432-10987",
+    "scammerName": "Neha Sharma",
+    "transcript": "Scammer: Hello, this is from Income Tax Department. Scammer: We found discrepancies in your tax returns. Scammer: You have pending tax dues of Rs 5,00,000. Scammer: If you don't pay immediately, we will file a case against you. User: This is a scam. Scammer: No sir, this is government notice. Pay through bank transfer now.",
+    "duration": 320,
+    "timestamp": "2026-02-04T09:15:00Z",
+    "riskLevel": "Critical",
+    "honeypotEngaged": true,
+    "status": "recorded",
+    "detectedPatterns": ["legal_threat", "urgency_pressure", "financial_threat", "government_impersonation"]
+  },
+  {
+    "id": "call_004",
+    "scammerId": "scammer_03",
+    "phoneNumber": "+91-76543-21098",
+    "scammerName": "Vikram Patel",
+    "transcript": "Scammer: Hello, this is Microsoft tech support. Your computer has a critical virus. Scammer: We detected malware in your Windows system. Scammer: Let me get remote access to fix this. User: How? Scammer: Go to Windows Run, type command, and I'll tell you what to type. Scammer: Once I have access, I can remove the virus.",
+    "duration": 450,
+    "timestamp": "2026-02-02T14:20:00Z",
+    "riskLevel": "High",
+    "honeypotEngaged": true,
+    "status": "recorded",
+    "detectedPatterns": ["tech_support_fraud", "urgency_pressure", "remote_access_request"]
+  }
+]

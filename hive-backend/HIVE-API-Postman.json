@@ -1,0 +1,404 @@
+{
+  "info": {
+    "name": "HIVE Backend API",
+    "description": "Complete API testing collection for HIVE scam detection backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/health",
+          "host": ["{{base_url}}"],
+          "path": ["api", "health"]
+        }
+      }
+    },
+    {
+      "name": "Spam Detection",
+      "item": [
+        {
+          "name": "Analyze Spam Message - Phishing",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"URGENT: Your account has suspicious activity. Click here immediately to verify your identity: https://secure-verify.com/login\",\n  \"messageType\": \"EMAIL\",\n  \"sender\": \"noreply@bank-security.com\",\n  \"subject\": \"Account Security Alert\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/analyze-message",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "analyze-message"]
+            }
+          }
+        },
+        {
+          "name": "Analyze Spam Message - Lottery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Congratulations! You have won ₹50 lakhs in our monthly lottery draw! Click here to claim your prize and complete a ₹5000 processing fee.\",\n  \"messageType\": \"SMS\",\n  \"sender\": \"+919876543210\",\n  \"subject\": \"Lottery Winner\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/analyze-message",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "analyze-message"]
+            }
+          }
+        },
+        {
+          "name": "Analyze Spam Message - Financial Fraud",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Exclusive opportunity: Invest ₹10,000 and get guaranteed 200% returns in 30 days. Limited slots available! Transfer to HDFC account: 123456789. Call +919111222333 now.\",\n  \"messageType\": \"SMS\",\n  \"sender\": \"+919111222333\",\n  \"subject\": \"Investment Opportunity\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/analyze-message",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "analyze-message"]
+            }
+          }
+        },
+        {
+          "name": "Get All Messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/messages?skip=0&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "messages"]
+            }
+          }
+        },
+        {
+          "name": "Get Message by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/messages/{{message_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "messages", "{{message_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Call Simulation",
+      "item": [
+        {
+          "name": "Generate Banking Scam Call",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scamType\": \"banking\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/simulate-call",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "simulate-call"]
+            }
+          }
+        },
+        {
+          "name": "Generate Lottery Scam Call",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scamType\": \"lottery\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/simulate-call",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "simulate-call"]
+            }
+          }
+        },
+        {
+          "name": "Generate Investment Scam Call",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scamType\": \"investment\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/simulate-call",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "simulate-call"]
+            }
+          }
+        },
+        {
+          "name": "Record Call Response",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userResponse\": \"Yes, I verified my account\",\n  \"stageIndex\": 0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/simulate-call/{{call_id}}/record",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "simulate-call", "{{call_id}}", "record"]
+            }
+          }
+        },
+        {
+          "name": "Get Call Simulations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/calls?skip=0&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "calls"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auto-Reply System",
+      "item": [
+        {
+          "name": "Create Auto-Reply",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messageId\": \"{{message_id}}\",\n  \"reply\": \"Thank you for contacting me. Can you verify this through the official app?\",\n  \"stage\": \"initial\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/auto-reply",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "auto-reply"]
+            }
+          }
+        },
+        {
+          "name": "Record Follow-Up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"followUp\": \"I shared my information. What's the next step?\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/auto-reply/{{message_id}}/follow-up",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "auto-reply", "{{message_id}}", "follow-up"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Intelligence & Reports",
+      "item": [
+        {
+          "name": "Get Intelligence Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/intelligence-report?days=7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "intelligence-report"]
+            }
+          }
+        },
+        {
+          "name": "Get System Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/spam-detection/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "spam-detection", "stats"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alerts",
+      "item": [
+        {
+          "name": "Get All Alerts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/alerts?skip=0&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "alerts"]
+            }
+          }
+        },
+        {
+          "name": "Get Alert Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/alerts/{{alert_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "alerts", "{{alert_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scammers",
+      "item": [
+        {
+          "name": "Get Scammer List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/scammers?skip=0&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "scammers"]
+            }
+          }
+        },
+        {
+          "name": "Get Scammer Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/scammers/{{scammer_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "scammers", "{{scammer_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statistics",
+      "item": [
+        {
+          "name": "Get Overall Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Get Daily Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stats/daily?days=7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "stats", "daily"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "message_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "call_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "alert_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "scammer_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
