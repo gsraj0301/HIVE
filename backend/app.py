@@ -13,6 +13,27 @@ engine = ScamAnalysisEngine(
     scammers_path='scammers_db.json'
 )
 
+@app.route('/', methods=['GET'])
+def root():
+    """Root endpoint - API welcome page"""
+    return jsonify({
+        "message": "HIVE Scam Detection API",
+        "status": "running",
+        "version": "1.0.0",
+        "endpoints": {
+            "health": "/api/health",
+            "analyze-call": "POST /api/analyze-call",
+            "extract-keywords": "POST /api/extract-keywords",
+            "detect-patterns": "POST /api/detect-patterns",
+            "calculate-risk": "POST /api/calculate-risk",
+            "get-scammers": "GET /api/scammers",
+            "intelligence-report": "GET /api/intelligence-report",
+            "get-patterns": "GET /api/patterns",
+            "search-scammers": "GET /api/scammers/search",
+            "get-alerts": "GET /api/alerts"
+        }
+    })
+
 @app.route('/api/health', methods=['GET'])
 def health():
     """Health check endpoint"""
