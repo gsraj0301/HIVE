@@ -1,0 +1,11 @@
+services:
+  - type: static
+    name: hive-frontend
+    env: static
+    branch: main
+    buildCommand: flutter build web --release
+    staticPublishPath: build/web
+    plan: free
+    envVars:
+      - key: FLUTTER_WEB_USE_SKIA
+        value: "true"
