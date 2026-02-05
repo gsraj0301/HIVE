@@ -3,7 +3,7 @@ import 'package:flutter_hive/theme/app_theme.dart';
 import 'package:flutter_hive/services/api_service.dart';
 
 class SpamAnalysisScreen extends StatefulWidget {
-  const SpamAnalysisScreen({Key? key}) : super(key: key);
+  const SpamAnalysisScreen({super.key});
 
   @override
   State<SpamAnalysisScreen> createState() => _SpamAnalysisScreenState();
@@ -16,6 +16,20 @@ class _SpamAnalysisScreenState extends State<SpamAnalysisScreen> {
   bool _isAnalyzing = false;
   Map<String, dynamic>? _analysisResult;
   String? _error;
+  bool _isUsingFallback = false;
+
+  static Map<String, dynamic> _getDefaultAnalysis() {
+    return {
+      'analysis': {
+        'keywords': ['suspicious', 'verify', 'urgent', 'click', 'account'],
+        'spam_probability': 0.89,
+        'risk_level': 'High',
+        'type': 'Phishing',
+        'suggested_action': 'Do not click any links. Report to relevant authorities.',
+        'confidence': 0.92,
+      }
+    };
+  }
 
   @override
   void dispose() {
@@ -36,6 +50,7 @@ class _SpamAnalysisScreenState extends State<SpamAnalysisScreen> {
       _isAnalyzing = true;
       _error = null;
       _analysisResult = null;
+      _isUsingFallback = false;
     });
 
     try {
@@ -47,10 +62,14 @@ class _SpamAnalysisScreenState extends State<SpamAnalysisScreen> {
 
       setState(() {
         _analysisResult = result;
+        _isUsingFallback = false;
       });
     } catch (e) {
+      // Use fallback data on error
       setState(() {
-        _error = e.toString();
+        _analysisResult = _getDefaultAnalysis();
+        _error = 'Using mock analysis (API unavailable)';
+        _isUsingFallback = true;
       });
     } finally {
       setState(() {
@@ -177,18 +196,40 @@ class _SpamAnalysisScreenState extends State<SpamAnalysisScreen> {
             ),
             const SizedBox(height: 24),
 
-            // Error Message
+            // Error/Fallback Message
             if (_error != null)
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
-                  border: Border.all(color: Colors.red),
+                  color: _isUsingFallback 
+                      ? Colors.orange.withOpacity(0.1)
+                      : Colors.red.withOpacity(0.1),
+                  border: Border.all(
+                    color: _isUsingFallback ? Colors.orange : Colors.red,
+                  ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
-                  _error ?? '',
-                  style: const TextStyle(color: Colors.red),
+                child: Row(
+                  children: [
+                    Icon(
+                      _isUsingFallback 
+                          ? Icons.info_outline 
+                          : Icons.error_outline,
+                      color: _isUsingFallback ? Colors.orange : Colors.red,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        _error ?? '',
+                        style: TextStyle(
+                          color: _isUsingFallback 
+                              ? Colors.orange 
+                              : Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             const SizedBox(height: 16),

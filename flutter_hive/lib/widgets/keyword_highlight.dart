@@ -6,10 +6,10 @@ class KeywordHighlight extends StatelessWidget {
   final bool isHighlighted;
 
   const KeywordHighlight({
-    Key? key,
+    super.key,
     required this.keyword,
     this.isHighlighted = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

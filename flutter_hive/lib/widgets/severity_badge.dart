@@ -6,10 +6,10 @@ class SeverityBadge extends StatelessWidget {
   final double fontSize;
 
   const SeverityBadge({
-    Key? key,
+    super.key,
     required this.severity,
     this.fontSize = 12,
-  }) : super(key: key);
+  });
 
   Color getSeverityColor() {
     switch (severity.toLowerCase()) {

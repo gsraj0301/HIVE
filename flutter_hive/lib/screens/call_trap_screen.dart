@@ -3,7 +3,7 @@ import 'package:flutter_hive/theme/app_theme.dart';
 import 'package:flutter_hive/services/api_service.dart';
 
 class CallTrapScreen extends StatefulWidget {
-  const CallTrapScreen({Key? key}) : super(key: key);
+  const CallTrapScreen({super.key});
 
   @override
   State<CallTrapScreen> createState() => _CallTrapScreenState();
@@ -17,6 +17,41 @@ class _CallTrapScreenState extends State<CallTrapScreen> {
   int _currentStage = 0;
   int _totalTimeWasted = 0;
   String? _error;
+  bool _isUsingFallback = false;
+
+  static Map<String, dynamic> _getDefaultCallSimulation() {
+    return {
+      'callId': 'call_${DateTime.now().millisecondsSinceEpoch}',
+      'conversation': [
+        {
+          'sender': 'scammer',
+          'message': 'Hello sir, this is Rajesh from ICICI Bank',
+          'techniquesUsed': ['Authority', 'Urgency'],
+        },
+        {
+          'sender': 'user',
+          'message': 'Hi, what is this regarding?',
+          'techniquesUsed': [],
+        },
+        {
+          'sender': 'scammer',
+          'message': 'Sir, we detected suspicious activity on your account',
+          'techniquesUsed': ['Fear', 'Urgency'],
+        },
+        {
+          'sender': 'user',
+          'message': 'What kind of suspicious activity?',
+          'techniquesUsed': [],
+        },
+        {
+          'sender': 'scammer',
+          'message': 'Your account has been compromised. Please verify your UPI ID',
+          'techniquesUsed': ['Social Engineering', 'Impersonation'],
+        },
+      ],
+      'estimatedDuration': 300,
+    };
+  }
 
   Future<void> _generateCallSimulation() async {
     setState(() {
@@ -25,6 +60,7 @@ class _CallTrapScreenState extends State<CallTrapScreen> {
       _conversation = [];
       _currentStage = 0;
       _totalTimeWasted = 0;
+      _isUsingFallback = false;
     });
 
     try {
@@ -32,12 +68,19 @@ class _CallTrapScreenState extends State<CallTrapScreen> {
 
       setState(() {
         _currentCallId = result['callId'];
-        _conversation = result['conversation'] as List;
+        _conversation = result['conversation'] as List? ?? [];
         _totalTimeWasted = result['estimatedDuration'] ?? 0;
+        _isUsingFallback = false;
       });
     } catch (e) {
+      // Use fallback on error
+      final fallback = _getDefaultCallSimulation();
       setState(() {
-        _error = e.toString();
+        _currentCallId = fallback['callId'];
+        _conversation = fallback['conversation'] as List;
+        _totalTimeWasted = fallback['estimatedDuration'] ?? 0;
+        _error = 'Using mock simulation (API unavailable)';
+        _isUsingFallback = true;
       });
     } finally {
       setState(() {
@@ -166,18 +209,40 @@ class _CallTrapScreenState extends State<CallTrapScreen> {
             ),
             const SizedBox(height: 24),
 
-            // Error Display
+            // Error/Fallback Display
             if (_error != null)
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
-                  border: Border.all(color: Colors.red),
+                  color: _isUsingFallback 
+                      ? Colors.orange.withOpacity(0.1)
+                      : Colors.red.withOpacity(0.1),
+                  border: Border.all(
+                    color: _isUsingFallback ? Colors.orange : Colors.red,
+                  ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
-                  _error ?? '',
-                  style: const TextStyle(color: Colors.red),
+                child: Row(
+                  children: [
+                    Icon(
+                      _isUsingFallback 
+                          ? Icons.info_outline 
+                          : Icons.error_outline,
+                      color: _isUsingFallback ? Colors.orange : Colors.red,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        _error ?? '',
+                        style: TextStyle(
+                          color: _isUsingFallback 
+                              ? Colors.orange 
+                              : Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             const SizedBox(height: 16),

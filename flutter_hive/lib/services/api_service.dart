@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:5000/api';
-  
-  // For Android emulator: http://10.0.2.2:5000/api
-  // For iOS simulator: http://localhost:5000/api
-  // For production: https://your-deployed-backend.com/api
+  // Base URL with fallback logic for different platforms
+  static String get baseUrl {
+    // For web: use same origin or update to backend URL
+    // For Android emulator: http://10.0.2.2:5000/api
+    // For iOS simulator: http://localhost:5000/api
+    // For production: https://your-deployed-backend.com/api
+    return 'http://localhost:5000/api';
+  }
   
   static const Duration timeout = Duration(seconds: 30);
 
@@ -368,7 +371,12 @@ class ApiService {
       ).timeout(timeout);
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        final data = jsonDecode(response.body);
+        // Wrap response if needed to match UI expectations
+        if (data.containsKey('report')) {
+          return data;
+        }
+        return {'report': data};
       } else {
         throw Exception('Failed to fetch report: ${response.statusCode}');
       }
