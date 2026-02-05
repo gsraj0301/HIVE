@@ -132,23 +132,6 @@ class ApiService {
     }
   }
 
-  /// Get intelligence report with analytics
-  static Future<Map<String, dynamic>> getIntelligenceReport() async {
-    try {
-      final response = await http
-          .get(Uri.parse('$baseUrl/intelligence-report'))
-          .timeout(timeout);
-
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body)['report'];
-      } else {
-        throw Exception('Failed to get report');
-      }
-    } catch (e) {
-      throw Exception('Error: $e');
-    }
-  }
-
   /// Get all scam patterns
   static Future<List<Map<String, dynamic>>> getScamPatterns() async {
     try {
