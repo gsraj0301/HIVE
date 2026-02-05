@@ -1,0 +1,12 @@
+services:
+  - type: static
+    name: hive-frontend
+    env: static
+    branch: main
+    # Build inside the flutter_hive subfolder for monorepo
+    buildCommand: cd flutter_hive && flutter pub get && flutter build web --release
+    staticPublishPath: flutter_hive/build/web
+    plan: free
+    envVars:
+      - key: FLUTTER_WEB_USE_SKIA
+        value: "true"
